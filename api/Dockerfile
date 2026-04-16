@@ -1,15 +1,19 @@
-# 1. Base image (Python setup)
 FROM python:3.11-slim
 
-# 2. working folder inside the container
 WORKDIR /app
 
-# 3. installing requirements copy
+# Requirements installing
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 4. copying all the code
+# copying old code
 COPY . .
 
-# 5. starting fastAPi (0.0.0.0 is VERY important for Render)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Ek choti si script  hain jo dono ko ek sath chalaye
+RUN echo "#!/bin/sh\nuvicorn main:app --host 0.0.0.0 --port 8000 & \nstreamlit run app.py --server.port 7860 --server.address 0.0.0.0" > start.sh
+RUN chmod +x start.sh
+
+#  using HF Spaces port 7860 
+EXPOSE 7860
+
+CMD ["./start.sh"]

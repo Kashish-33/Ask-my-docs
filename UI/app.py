@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 
 # configuration
-API_URL = "http://localhost:8000"
+API_URL = "http://0.0.0.0:8000"
+#API_URL = "http://localhost:8000"
 
 # Page- setup
 st.set_page_config(
