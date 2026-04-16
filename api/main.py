@@ -1,5 +1,9 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
+import os
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
 from rank_bm25 import BM25Okapi
 from sentence_transformers import  SentenceTransformer, CrossEncoder
@@ -8,7 +12,8 @@ from dotenv import load_dotenv
 import pdfplumber
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import numpy as np
-import os
+
+
 
 load_dotenv()
 
