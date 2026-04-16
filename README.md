@@ -2,9 +2,7 @@
 
 > A hybrid RAG system that turns uploaded PDFs into a queryable knowledge base — combining keyword search, semantic retrieval, neural reranking, and Groq-powered LLM inference.
 
-
-
-**[Live Demo →(https://kashi-77-ask-my-docs.hf.space)]**
+**[Live Demo →](https://kashi-77-ask-my-docs.hf.space)**
 
 ---
 
@@ -20,6 +18,7 @@ Pure vector search struggles with exact keywords, acronyms, and proper nouns. As
 
 ## Architecture
 
+```text
 User Query
     │
     ▼
@@ -37,7 +36,9 @@ Streamlit UI  ──►  FastAPI Backend
                         │
                         ▼
                    Final Answer
+```
 
+---
 
 ## Tech Stack
 
@@ -52,6 +53,7 @@ Streamlit UI  ──►  FastAPI Backend
 | LLM | Groq — Llama 3.3-70B-Versatile |
 | Deployment | Docker, Hugging Face Spaces |
 
+---
 
 ## Project Structure
 
@@ -68,7 +70,9 @@ ask-my-docs/
 ├── .gitignore
 ├── Procfile             # Hugging Face Spaces entry point
 └── requirements.txt
+```
 
+---
 
 ## Run Locally
 
@@ -95,7 +99,7 @@ GROQ_API_KEY=your_groq_api_key_here
 
 **Step 3 — Start the app**
 
-```
+```bash
 # Terminal 1 — Backend
 uvicorn api.main:app --reload --port 8000
 
@@ -105,7 +109,7 @@ streamlit run UI/app.py
 
 **Step 4 — Or run with Docker**
 
-```
+```bash
 docker build -t ask-my-docs .
 docker run -p 8000:8000 --env-file .env ask-my-docs
 ```
