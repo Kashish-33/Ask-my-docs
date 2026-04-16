@@ -2,18 +2,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Requirements installing
+# System dependencies 
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# copying old code
 COPY . .
 
-# Ek choti si script  hain jo dono ko ek sath chalaye
-RUN echo "#!/bin/sh\nuvicorn main:app --host 0.0.0.0 --port 8000 & \nstreamlit run app.py --server.port 7860 --server.address 0.0.0.0" > start.sh
+# Ek robust script jo dono ko saath chalaye (using python -m for safety)
+RUN echo "#!/bin/sh\npython3 -m uvicorn main:app --host 0.0.0.0 --port 8000 & \npython3 -m streamlit run app.py --server.port 7860 --server.address 0.0.0.0" > start.sh
 RUN chmod +x start.sh
 
-#  using HF Spaces port 7860 
 EXPOSE 7860
 
 CMD ["./start.sh"]
