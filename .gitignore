@@ -3,3 +3,5 @@ data/chromadb_rag/
 rag_env/
 __pycache__/
 *.pyc
+api/data/chromadb/
+api/data/chromadb_rag/
