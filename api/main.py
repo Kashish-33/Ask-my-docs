@@ -1,9 +1,12 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 import os
-__import__('pysqlite3')
 import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+import platform
+
+if platform.system() != "Windows":
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
 from rank_bm25 import BM25Okapi
 from sentence_transformers import  SentenceTransformer, CrossEncoder
@@ -54,15 +57,11 @@ async def upload_pdf(file: UploadFile = File(...)):
 
     embeddings = embed_model.encode(new_chunks).tolist()
 
-    # Purana data clear karo
-    existing = collection.get()
-    if existing['ids']:
-        collection.delete(ids=existing['ids'])
-
+    
     collection.add(
         documents=new_chunks,
         embeddings=embeddings,
-        ids=[f"chunk_{i}" for i in range(len(new_chunks))]
+        ids=[f"{file.filename}_chunk_{i}" for i in range(len(new_chunks))]
     )
 
     return {"message": f" {file.filename} processed!", "chunks": len(new_chunks)}
@@ -110,7 +109,7 @@ Context:
 Question: {query}
 """
     response = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}]
     )
 
