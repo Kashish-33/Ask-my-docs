@@ -1,0 +1,122 @@
+[
+  {
+    "query": "What is the main problem this project addresses?",
+    "answer": "The project tackles the fundamental conflict in healthcare AI: AI models need large, diverse patient data to achieve high diagnostic accuracy, but hospitals cannot freely share that data because of strict privacy concerns, creating data silos and risking breaches.\u202fThe main problem is how to enable collaborative training of accurate diagnostic models while keeping patient data private. \n\n**Context used:** the \u201cProblem Definition\u201d and \u201cProblem Statement\u201d sections that describe the need for collaborative training versus privacy restrictions.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What are the three key problems with centralized data collection?",
+    "answer": "The three key problems with centralized data collection are:\n\n1. **Data privacy** \u2013 patient data is sensitive and must be protected.  \n2. **Centralized data risk** \u2013 aggregating data in one location creates a high\u2011value target for breaches.  \n3. **Data silos** \u2013 hospitals hold valuable datasets that are difficult to combine when data is kept separately.\n\n**Context used:** The \u201cKey Problems\u201d list in the provided text, which enumerates \u201cData Privacy,\u201d \u201cCentralized Data Risk,\u201d and \u201cData Silos\u201d as the main issues with centralized data collection.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What does Federated Learning allow hospitals to do?",
+    "answer": "Federated Learning lets hospitals collaboratively train a diagnostic AI model while keeping each institution\u2019s patient data on\u2011site\u202f\u2013\u202fthey share only model updates, not the raw data.  \n\n*Context used:* \u201cOur project combines Federated Learning + Differential Privacy to allow hospitals to collaboratively train medical AI while keeping patient data local.\u201d and the motivation line that \u201cFederated Learning enables \u2026\u201d indicating distributed model training without data sharing.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What is the limitation of Federated Learning alone, without differential privacy?",
+    "answer": "Federated Learning by itself still carries privacy risks because the shared model updates can leak information about the underlying patient data.  \n\n*Used context:* \u201cAlthough Federated Learning reduces the need to share raw medical data, privacy risks can remain in shared model updates.\u201d and \u201cFederated Learning\u202f\u2026\u202fKeeps data local but updates may leak.\u201d",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What are the primary objectives of this project?",
+    "answer": "The primary objectives of the project are to  \n\n1. **Develop a Federated Learning framework for medical\u2011image classification**, and  \n2. **Measure the computational and communication overhead** of that framework.  \n\nThese objectives are taken directly from the \u201cPrimary Objectives\u201d section of the provided context.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What are the secondary objectives of this project?",
+    "answer": "The secondary objectives are:\n\n- Develop a dashboard for experiment monitoring and visualization.  \n- Integrate Differential Privacy into the federated training process.  \n- Identify a practical privacy configuration that maintains acceptable diagnostic performance.  \n- Quantify the impact of different privacy levels on diagnostic performance.  \n- Analyze privacy\u2011utility trade\u2011offs under IID and non\u2011IID data distributions.  \n\n**Context used:** The list of goals following \u201cDevelop a dashboard for experiment monitoring and visualization\u2026\u201d through \u201cAnalyze privacy\u2013utility trade-offs under IID and non\u2011IID data distributions.\u201d in the provided project description.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What technologies are used for the Federated Learning component?",
+    "answer": "The Federated Learning component relies on a combination of federated\u2011learning\u2011specific techniques and privacy\u2011enhancing technologies, namely:\n\n- **Federated aggregation / secure aggregation** (as described in Bonawitz\u202fet\u202fal., \u201cPractical Secure Aggregation\u2026\u201d)  \n- **Differential privacy** (adding calibrated noise to model updates)  \n- **Gradient clipping** on the hospital\u2011side before sending updates (\u201cHospital Data Gradient Clipping Protected Update Global Model\u201d)  \n- A **Research LayerCore pipeline** that orchestrates local training, protected update generation, and global model integration  \n\nThese technologies together constitute the Federated Learning stack used in the described framework.  \n\n*Context used: the list of items under \u201cFederated Learning\u201d, \u201cDifferential Privacy\u201d, \u201cFederated Aggregation\u201d, \u201cResearch LayerCore Pipeline\u201d, \u201cHospital Data Gradient Clipping Protected Update Global Model\u201d, \u201cLocal Training \u2026 Privacy Noise Aggregation\u201d, and the citation to Bonawitz\u202fet\u202fal. (Secure Aggregation).*",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What are the steps in the differential privacy pipeline?",
+    "answer": "I don't know. (The provided context does not include any description of the steps in a differential privacy pipeline.)",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What evaluation metrics will be used to measure performance?",
+    "answer": "The performance will be evaluated with standard classification metrics, specifically **accuracy, precision, recall,\u202fF\u20111 score, ROC\u2011AUC curve, loss and convergence** (also referred to as \u201cScore\u201d).  \n\n*Used the portion of the context that lists \u201cMeasure: Accuracy, Precision, Recall, F\u20111 Score, ROC\u2011AUC Curve, Loss, Convergence\u201d.*",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What is the difference between centralized ML, Federated Learning, and FL+DP in terms of privacy?",
+    "answer": "- **Centralized ML** \u2013 The raw data are shared with a central server (\u201cYes\u201d under raw\u2011data sharing) and the approach provides only **low** privacy protection.  \n\n- **Federated Learning (FL)** \u2013 Data stay on the local hospitals (\u201cNo\u201d under raw\u2011data sharing).  Because only model updates are exchanged, privacy is **better** than in centralized ML, though the updates can still leak some information about the training data.  \n\n- **FL\u202f+\u202fDifferential Privacy (FL\u202f+\u202fDP)** \u2013 Like FL, raw data are never shared, but each client adds differential\u2011privacy noise to its updates. This gives **stronger** privacy guarantees than plain FL (and much stronger than centralized ML), at the cost of some model utility.\n\n**Context used:** the table rows \u201cCentralized ML Yes High Low\u201d, \u201cFederated Learning No High Better\u201d, and \u201cFL + DP No High Stronger\u201d, plus the explanatory sentences about FL reducing raw\u2011data sharing but still having privacy risks and DP reducing those risks.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What accuracy did the model achieve?",
+    "answer": "I don't know.  \n**Context used:** The provided text only describes the model\u2019s accuracy qualitatively (e.g., \u201cHigh\u201d) and does not give any specific numeric accuracy value.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What is the exact name of the dataset used?",
+    "answer": "I don't know.\n\n**Context used:** The only information about the dataset in the provided text is the generic description \u201cPublicly available medical imaging dataset,\u201d which does not specify an exact name.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What epsilon value was used for differential privacy?",
+    "answer": "I don't know.  \n*Used context:* The provided text discusses differential privacy, privacy budgets, and noise levels but does not specify any particular epsilon value.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "How many hospitals participated in the actual experiment?",
+    "answer": "I don't know.\n\n*Used the portion of the context describing the experimental setup, which mentions \u201cmultiple virtual hospitals\u201d and \u201ceach hospital trains the global model locally,\u201d but does not specify an exact number of hospitals.*",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What was the final loss value after training?",
+    "answer": "I don't know.  \n**Context used:** The provided text discusses centralized versus federated learning, privacy considerations, and related system details, but it does not contain any information about a final loss value after training.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "How long did the full training process take?",
+    "answer": "I don't know.  \n*Used the entire provided context, which contains no information about the duration of the full training process.*",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "Who are the authors of this project?",
+    "answer": "The project\u2019s work is attributed to the authors listed in the cited references:\n\n- N.\u202fRieke and co\u2011authors\u202f[5]  \n- K.\u202fBonawitz and co\u2011authors\u202f[6]  \n- B.\u202fMcMahan and co\u2011authors\u202f[1]  \n- C.\u202fDwork and co\u2011authors\u202f[2]  \n- M.\u202fAbadi and co\u2011authors\u202f[3]  \n- P.\u202fKairouz and co\u2011authors\u202f[4]\n\n**Context used:** the author names provided in references\u202f[1]\u2013[6] of the supplied excerpt.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What programming language version was used?",
+    "answer": "I don't know.\n\n*Used context:* The provided text lists technologies such as Python, PyTorch, and other libraries, but it does not specify any particular programming language version.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "What was the F1-score achieved on the test set?",
+    "answer": "I don't know.\n\n*Used context:* The provided text only references \u201cPrecision, Recall, F\u20111\u201d as evaluation measures but does not give any numeric F1\u2011score for the test set.",
+    "confidence": 5,
+    "retries": 0
+  },
+  {
+    "query": "Which specific medical condition/disease was diagnosed by the model?",
+    "answer": "I don't know.  \n**Context used:** The provided excerpt describes a federated learning and differential privacy framework for medical AI diagnostics, but it does not mention any specific medical condition or disease that the model diagnoses.",
+    "confidence": 5,
+    "retries": 0
+  }
+]
