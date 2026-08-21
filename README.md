@@ -1,3 +1,14 @@
+---
+title: Ask My Docs
+emoji: 📄
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+app_port: 8000
+---
+
+
 # Ask My Docs
 
 > A hybrid RAG system that turns uploaded PDFs into a queryable, multi-document knowledge base — combining keyword search, semantic retrieval, neural reranking, self-correcting generation, and Groq-powered LLM inference.
