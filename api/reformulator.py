@@ -1,5 +1,6 @@
 from groq import Groq
 
+
 def reformulate_query(original_query: str, top_chunks: list, groq_client: Groq) -> str:
     if not top_chunks:
         context_preview = "No relevant context was found in the documents at all."

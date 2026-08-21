@@ -3,6 +3,10 @@ from pydantic import BaseModel
 import os
 import sys
 import platform
+import uuid
+from .judge import check_grounding
+from .reformulator import reformulate_query
+from .logger import log_attempt
 
 if platform.system() != "Windows":
     __import__('pysqlite3')
@@ -109,13 +113,37 @@ Question: {query}
 
 
 @app.post("/ask")
+@app.post("/ask")
 def ask(request: QueryRequest):
     query = request.question
-    top_chunks = retrieve_and_rerank(query)
-    answer = generate_answer(query, top_chunks)
+    session_id = str(uuid.uuid4())
+    max_retries = 2
+    score_threshold = 4
+
+    final_answer = None
+    final_score = None
+    top_chunks = []
+
+    for attempt in range(max_retries + 1):
+        top_chunks = retrieve_and_rerank(query)
+        answer = generate_answer(query, top_chunks)
+        verdict = check_grounding(query, top_chunks, answer, groq_client)
+
+        log_attempt(session_id, attempt, query, verdict["score"], verdict["reason"])
+
+        final_answer = answer
+        final_score = verdict["score"]
+
+        if verdict["score"] >= score_threshold:
+            break
+
+        if attempt < max_retries:
+            query = reformulate_query(query, top_chunks, groq_client)
 
     return {
-        "question": query,
-        "answer": answer,
+        "question": request.question,
+        "answer": final_answer,
+        "confidence_score": final_score,
+        "retries_used": attempt,
         "top_chunks": top_chunks
     }

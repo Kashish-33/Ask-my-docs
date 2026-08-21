@@ -30,13 +30,10 @@ Reply with ONLY valid JSON, no other text:
     )
 
     raw = response.choices[0].message.content.strip()
-
-    # LLMs sometimes wrap JSON in ```json blocks despite instructions — strip if present
     raw = re.sub(r"^```json|```$", "", raw, flags=re.MULTILINE).strip()
 
     try:
         result = json.loads(raw)
         return {"score": int(result["score"]), "reason": result.get("reason", "")}
     except (json.JSONDecodeError, KeyError, ValueError):
-        # If the judge itself fails to return valid JSON, fail safe: treat as low confidence
         return {"score": 1, "reason": f"Judge parsing failed. Raw output: {raw}"}
