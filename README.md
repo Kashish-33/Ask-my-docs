@@ -3,7 +3,7 @@
 
 > A hybrid RAG system that turns uploaded PDFs into a queryable, multi-document knowledge base — combining keyword search, semantic retrieval, neural reranking, self-correcting generation, and Groq-powered LLM inference.
 
-**[Live Demo →](https://huggingface.co/spaces/kashi-77/ask-my-docs)**
+**[Live Demo →](https://kashi-77-ask-my-docs.hf.space)**
 
 ---
 
