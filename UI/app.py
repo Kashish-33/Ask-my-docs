@@ -124,7 +124,9 @@ if question:
                 st.session_state.chat_history.append({
                     "question": question,
                     "answer": data["answer"],
-                    "chunks": data["top_chunks"]
+                    "chunks": data["top_chunks"],
+                    "confidence": data.get("confidence_score", "N/A"),
+                    "retries": data.get("retries_used", 0)
                 })
 
             else:
@@ -143,6 +145,14 @@ for chat in st.session_state.chat_history:
 
         with st.chat_message("assistant"):
             st.write(chat["answer"])
+
+            confidence = chat.get("confidence", "N/A")
+            retries = chat.get("retries", 0)
+
+            if confidence != "N/A" and confidence >= 4:
+                st.caption(f"✅ Confidence: {confidence}/5" + (f" · Retried {retries}x" if retries > 0 else ""))
+            elif confidence != "N/A":
+                st.caption(f"⚠️ Confidence: {confidence}/5" + (f" · Retried {retries}x" if retries > 0 else ""))
 
                 # Top chunks- collapsible section
         with st.expander("📚 View Source Chunks"):

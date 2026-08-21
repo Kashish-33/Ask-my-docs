@@ -112,7 +112,7 @@ Question: {query}
     return response.choices[0].message.content
 
 
-@app.post("/ask")
+
 @app.post("/ask")
 def ask(request: QueryRequest):
     query = request.question
